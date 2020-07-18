@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -111,6 +112,11 @@ public class DashboardFragment extends Fragment implements ExampleAdapter.OnItem
     }
     private JsonObjectRequest updateValues(){
         String url = "https://corona.lmao.ninja/v2/countries/INDIA";
+        SharedPreferences sh = getActivity().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+        final int pre_total =sh.getInt("pre_total",0);
+        final int pre_active =sh.getInt("pre_active",0);
+        final int pre_recover =sh.getInt("pre_recover",0);
+        final int pre_death =sh.getInt("pre_death",0);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,url,null,new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -126,7 +132,7 @@ public class DashboardFragment extends Fragment implements ExampleAdapter.OnItem
                     n_recov.setText("[+"+str_n_recover+"]");
                     n_death.setText("[+"+str_n_death+"]");
                     ValueAnimator animator = new ValueAnimator();
-                    animator.setObjectValues(0, str_total);
+                    animator.setObjectValues(pre_total, str_total);
                     animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         public void onAnimationUpdate(ValueAnimator animation) {
                             t_case.setText(String.valueOf(animation.getAnimatedValue()));
@@ -135,7 +141,7 @@ public class DashboardFragment extends Fragment implements ExampleAdapter.OnItem
                     animator.setDuration(5000);
                     animator.start();
                     ValueAnimator animator1 = new ValueAnimator();
-                    animator1.setObjectValues(0, str_active);
+                    animator1.setObjectValues(pre_active, str_active);
                     animator1.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         public void onAnimationUpdate(ValueAnimator animation) {
                             t_active.setText(String.valueOf(animation.getAnimatedValue()));
@@ -144,7 +150,7 @@ public class DashboardFragment extends Fragment implements ExampleAdapter.OnItem
                     animator1.setDuration(5000);
                     animator1.start();
                     ValueAnimator animator2 = new ValueAnimator();
-                    animator2.setObjectValues(0, str_recover);
+                    animator2.setObjectValues(pre_recover, str_recover);
                     animator2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         public void onAnimationUpdate(ValueAnimator animation) {
                             t_recov.setText(String.valueOf(animation.getAnimatedValue()));
@@ -153,7 +159,7 @@ public class DashboardFragment extends Fragment implements ExampleAdapter.OnItem
                     animator2.setDuration(5000);
                     animator2.start();
                     ValueAnimator animator3 = new ValueAnimator();
-                    animator3.setObjectValues(0, str_death);
+                    animator3.setObjectValues(pre_death, str_death);
                     animator3.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         public void onAnimationUpdate(ValueAnimator animation) {
                             t_death.setText(String.valueOf(animation.getAnimatedValue()));
@@ -161,6 +167,13 @@ public class DashboardFragment extends Fragment implements ExampleAdapter.OnItem
                     });
                     animator3.setDuration(5000);
                     animator3.start();
+                    SharedPreferences sh = getActivity().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor myEdit = sh.edit();
+                    myEdit.putInt("pre_total",str_total);
+                    myEdit.putInt("pre_active",str_active);
+                    myEdit.putInt("pre_recover",str_recover);
+                    myEdit.putInt("pre_death",str_death);
+                    myEdit.commit();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -180,7 +193,7 @@ public class DashboardFragment extends Fragment implements ExampleAdapter.OnItem
         queue2 = Volley.newRequestQueue(getActivity());
         JsonObjectRequest stringRequest = citylist(clickedItem.get_country());
         queue2.add(stringRequest);
-        new CountDownTimer(100,1000){
+        new CountDownTimer(300,1000){
             @Override
             public void onTick(long l) {
             }

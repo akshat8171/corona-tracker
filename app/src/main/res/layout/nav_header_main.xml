@@ -6,8 +6,8 @@
     android:gravity="start"
     android:orientation="vertical"
     android:background="@color/Teal"
-    android:paddingLeft="10dp"
-    android:paddingTop="20dp">
+    android:paddingLeft="15dp"
+    android:paddingTop="40dp">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="150dp"

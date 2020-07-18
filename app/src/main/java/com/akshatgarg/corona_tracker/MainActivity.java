@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONArray response) {
                 try {
-                    for (int i=response.length()-1; i>response.length()-15 ; i--){
+                    for (int i=response.length()-1; i>response.length()-21  ; i--){
                         JSONObject statewise= response.getJSONObject(i);
                         String one_news = statewise.getString("update");
                         news_list.add(new news_item(one_news));
