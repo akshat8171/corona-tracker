@@ -168,7 +168,7 @@ public class DashboardFragment extends Fragment implements ExampleAdapter.OnItem
         },new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(),error.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Network Unavailable",Toast.LENGTH_LONG).show();
             }
         });
         Log.d(request.toString(),"mess");
@@ -227,7 +227,7 @@ public class DashboardFragment extends Fragment implements ExampleAdapter.OnItem
         },new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(),error.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Network Unavailable",Toast.LENGTH_LONG).show();
             }
         });
         Log.d(request.toString(),"mess");

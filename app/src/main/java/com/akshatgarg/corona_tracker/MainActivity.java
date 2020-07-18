@@ -1,7 +1,9 @@
 package com.akshatgarg.corona_tracker;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.akshatgarg.corona_tracker.ui.dashboard.example_item;
+import com.akshatgarg.corona_tracker.ui.notifications.news_item;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -43,8 +46,9 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
-    public RequestQueue queue;
+    public RequestQueue queue,queue1;
     public ArrayList<example_item> exampleList;
+    public ArrayList<news_item> news_list;
     public DrawerLayout drawer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +57,11 @@ public class MainActivity extends AppCompatActivity {
         queue = Volley.newRequestQueue(this);
         JsonArrayRequest stringRequest = fillStatelsit();
         queue.add(stringRequest);
+        stringRequest = newslist();
+        queue.add(stringRequest);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.\
-        BottomNavigationView b_navView = findViewById(R.id.bottom_navigation_view);
+        final BottomNavigationView b_navView = findViewById(R.id.bottom_navigation_view);
         drawer = findViewById(R.id.drawer_layout);
         findViewById(R.id.menu_open).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 drawer.openDrawer(GravityCompat.START);
             }
         });
-        NavigationView d_navView = findViewById(R.id.nav_view);
+        final NavigationView d_navView = findViewById(R.id.nav_view);
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(b_navView, navController);
         d_navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -72,21 +78,28 @@ public class MainActivity extends AppCompatActivity {
                 int id= item.getItemId();
                 switch (id){
                     case R.id.nav_creator:
-                        Toast.makeText(MainActivity.this, "yess", Toast.LENGTH_SHORT).show();
+                        Intent intent1 = new Intent(MainActivity.this,terms_of_use.class);
+                        b_navView.removeBadge(R.id.navigation_notifications);
+                        startActivity(intent1);
                         break;
                     case R.id.nav_tof:
-                        Toast.makeText(MainActivity.this, "yess", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MainActivity.this,terms_of_use.class);
-                        startActivity(intent);
+                        Intent intent2 = new Intent(MainActivity.this,terms_of_use.class);
+                        startActivity(intent2);
                         break;
                     case R.id.nav_pri:
-                        Toast.makeText(MainActivity.this, "yess", Toast.LENGTH_SHORT).show();
+                        Intent intent3 = new Intent(MainActivity.this, privacy.class);
+                        startActivity(intent3);
                         break;
                     case R.id.nav_ver:
-                        Toast.makeText(MainActivity.this, "yess", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_rate_us:
-                        Toast.makeText(MainActivity.this, "yess", Toast.LENGTH_SHORT).show();
+                        try{
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="+ "com.android.chrome")));
+                            Toast.makeText(MainActivity.this, getPackageName(), Toast.LENGTH_SHORT).show();
+                        }
+                        catch (ActivityNotFoundException e){
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id="+"com.android.chrome")));
+                        }
                         break;
                 }
                 return false;
@@ -116,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                             return 0;
                         }
                     });
-                    savedata();
+                    savestatedata();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -125,18 +138,53 @@ public class MainActivity extends AppCompatActivity {
         },new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MainActivity.this,error.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this,"Network Unavailable",Toast.LENGTH_LONG).show();
             }
         });
         Log.d(request.toString(),"mess");
         return request;
     }
-    private void savedata(){
+    private void savestatedata(){
         SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String json = gson.toJson(exampleList);
         editor.putString("state_wise_list", json);
+        editor.apply();
+    }
+    public JsonArrayRequest newslist(){
+        String url = "https://api.covid19india.org/updatelog/log.json";
+        news_list = new ArrayList<>();
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,url,null,new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                try {
+                    for (int i=response.length()-1; i>response.length()-15 ; i--){
+                        JSONObject statewise= response.getJSONObject(i);
+                        String one_news = statewise.getString("update");
+                        news_list.add(new news_item(one_news));
+                    }
+                    savenewsdata();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(MainActivity.this,"Network Unavailable",Toast.LENGTH_LONG).show();
+            }
+        });
+        Log.d(request.toString(),"mess");
+        return request;
+    }
+    private void savenewsdata(){
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(news_list);
+        editor.putString("news_list", json);
         editor.apply();
     }
 }
