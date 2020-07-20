@@ -5,17 +5,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.akshatgarg.corona_tracker.ui.dashboard.example_item;
 import com.akshatgarg.corona_tracker.ui.notifications.news_item;
+import com.akshatgarg.corona_tracker.ui.faq.corona_faq;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -29,6 +32,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -69,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 drawer.openDrawer(GravityCompat.START);
             }
         });
-        final NavigationView d_navView = findViewById(R.id.nav_view);
+        NavigationView d_navView = findViewById(R.id.nav_view);
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(b_navView, navController);
         d_navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -77,25 +81,25 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id= item.getItemId();
                 switch (id){
+                    case R.id.preventions:
+                        Intent intent4 = new Intent(MainActivity.this, preventions.class);
+                        startActivity(intent4);
+                        break;
+                    case R.id.faq:
+                        Intent intent5 = new Intent(MainActivity.this, corona_faq.class);
+                        startActivity(intent5);
+                        break;
                     case R.id.nav_creator:
-                        Intent intent1 = new Intent(MainActivity.this,terms_of_use.class);
-                        b_navView.removeBadge(R.id.navigation_notifications);
-                        startActivity(intent1);
-                        break;
-                    case R.id.nav_tof:
-                        Intent intent2 = new Intent(MainActivity.this,terms_of_use.class);
-                        startActivity(intent2);
-                        break;
-                    case R.id.nav_pri:
-                        Intent intent3 = new Intent(MainActivity.this, privacy.class);
-                        startActivity(intent3);
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+                        alertDialogBuilder.setMessage("Name:").setCancelable(true);
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
                         break;
                     case R.id.nav_ver:
                         break;
                     case R.id.nav_rate_us:
                         try{
                             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="+ "com.android.chrome")));
-                            Toast.makeText(MainActivity.this, getPackageName(), Toast.LENGTH_SHORT).show();
                         }
                         catch (ActivityNotFoundException e){
                             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id="+"com.android.chrome")));
@@ -125,8 +129,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                     Collections.sort(exampleList, new Comparator<example_item>() {
                         @Override
-                        public int compare(example_item example_item, example_item t1) {
-                            return 0;
+                        public int compare(example_item t, example_item t1) {
+                            return t1.total_case()-t.total_case();
                         }
                     });
                     savestatedata();
@@ -159,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONArray response) {
                 try {
-                    for (int i=response.length()-1; i>response.length()-21  ; i--){
+                    for (int i=response.length()-1; i>10  ; i--){
                         JSONObject statewise= response.getJSONObject(i);
                         String one_news = statewise.getString("update");
                         news_list.add(new news_item(one_news));

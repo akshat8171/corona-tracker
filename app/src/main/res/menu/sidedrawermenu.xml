@@ -2,17 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
+    <item android:id="@+id/preventions"
+        android:title="Prevention Tips"/>
+    <item android:id="@+id/faq"
+        android:title="Corona FAQs"/>
 
-    <group android:checkableBehavior="single">
+    <group android:id="@+id/communicate"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_creator"
             android:title="About Creator" />
-        <item
-            android:id="@+id/nav_tof"
-            android:title="Terms of Use" />
-        <item
-            android:id="@+id/nav_pri"
-            android:title="Privacy Policy" />
 
         <item
             android:id="@+id/nav_ver"

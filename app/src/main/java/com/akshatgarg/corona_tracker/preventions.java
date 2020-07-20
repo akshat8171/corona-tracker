@@ -6,20 +6,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
-import com.akshatgarg.corona_tracker.R;
-import com.akshatgarg.corona_tracker.ui.faq.corona_faq;
-
-public class privacy extends AppCompatActivity {
+public class preventions extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_privacy);
+        setContentView(R.layout.activity_preventions);
         ImageButton back = (ImageButton) findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                privacy.super.onBackPressed();
+                preventions.super.onBackPressed();
             }
         });
     }

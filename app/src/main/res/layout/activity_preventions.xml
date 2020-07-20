@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".preventions">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
+            <ImageButton
+                android:background="@color/Teal"
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/back_icon"
+                android:layout_marginRight="10dp"/>
+            <TextView
+                android:padding="5dp"
+                android:id="@+id/state_name"
+                android:text="Preventions"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:textColor="@color/White"/>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:gravity="center"
+            android:text="HOW TO PROTECT \n YOURSELF"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="@color/Black_Cat"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:lineSpacingExtra="2dp"
+            android:layout_marginTop="17dp"
+            android:textSize="18dp"
+            android:layout_marginBottom="20dp"
+            android:text="World Health Organisation \n recommends people take simple \n precautions against coronavirus to \n reduce exposure and transmisssion" />
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:cardCornerRadius="40dp"
+            android:elevation="50dp"
+            app:strokeWidth="2dp"
+            app:strokeColor="@color/Teal"
+            android:layout_margin="20dp">
+        <LinearLayout
+            android:layout_width="300dp"
+            android:background="@color/Platinum"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_margin="20dp"
+                android:layout_gravity="center"
+                android:layout_height="80dp"
+                android:src="@drawable/wear_mask" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Wear Mask"
+                android:textStyle="bold"
+                android:textColor="@color/Black_Cat"
+                android:gravity="center"
+                android:textSize="20dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cover Mouth and nose with mask \n and make sure there are no gaps \n between your face and the mask. So \n it will help in protecting the \ncommunity at large "
+                android:layout_margin="10dp"
+                android:textColor="@color/Black_Cat"
+                android:gravity="center"
+                android:textSize="15dp"/>
+        </LinearLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:cardCornerRadius="40dp"
+            android:elevation="50dp"
+            app:strokeWidth="2dp"
+            app:strokeColor="@color/Teal"
+            android:layout_margin="20dp">
+
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/Platinum"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_margin="20dp"
+                    android:layout_gravity="center"
+                    android:layout_height="80dp"
+                    android:src="@drawable/wash_hand" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Wash Hands"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textColor="@color/Black_Cat"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Wet your hands with clean, running \nwater and apply soap. Lather your \nhands, including and backs, between your fingers and under your nails and scrub at least 20 seconds."
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:textColor="@color/Black_Cat"
+                    android:textSize="15dp"/>
+            </LinearLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:cardCornerRadius="40dp"
+            android:elevation="50dp"
+            app:strokeWidth="2dp"
+            app:strokeColor="@color/Teal"
+            android:layout_margin="20dp">
+
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/Platinum"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_margin="20dp"
+                    android:layout_gravity="center"
+                    android:layout_height="80dp"
+                    android:src="@drawable/stay_home" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Stay Home"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textColor="@color/Black_Cat"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Its very important that you stay at \nhome if you have symptoms that may be caused by COVID-19 or you \n live with someone that has \nsymptoms. This will help you to control \nthe spread"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:textColor="@color/Black_Cat"
+                    android:textSize="15dp"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+    </ScrollView>
+</LinearLayout>

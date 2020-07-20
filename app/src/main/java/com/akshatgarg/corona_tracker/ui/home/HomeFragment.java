@@ -1,5 +1,8 @@
 package com.akshatgarg.corona_tracker.ui.home;
 
+import android.animation.ValueAnimator;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,24 +49,98 @@ public class HomeFragment extends Fragment {
     }
     private JsonObjectRequest updateValues(){
         String url = "https://corona.lmao.ninja/v2/all";
+        SharedPreferences sh = getActivity().getSharedPreferences("world_data_set", Context.MODE_PRIVATE);
+        final int pre_total =sh.getInt("pre_total",0);
+        final int pre_active =sh.getInt("pre_active",0);
+        final int pre_recover =sh.getInt("pre_recover",0);
+        final int pre_death =sh.getInt("pre_death",0);
+        final int pre_n_total =sh.getInt("pre_n_total",0);
+        final int pre_n_recover =sh.getInt("pre_n_recov",0);
+        final int pre_n_death =sh.getInt("pre_n_death",0);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,url,null,new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    String str_cases = response.getString("cases");
-                    String str_active = response.getString("active");
-                    String str_recover = response.getString("recovered");
-                    String str_death = response.getString("deaths");
-                    String str_n_death = response.getString("todayDeaths");
-                    String str_n_case = response.getString("todayCases");
-                    String str_n_recov = response.getString("todayRecovered");
-                    t_case.setText(str_cases);
-                    t_active.setText(str_active);
-                    t_death.setText(str_death);
-                    t_recov.setText(str_recover);
-                    n_case.setText(str_n_case);
-                    n_recover.setText(str_n_recov);
-                    n_death.setText(str_n_death);
+                    int str_total = response.getInt("cases");
+                    int str_active = response.getInt("active");
+                    int str_recover = response.getInt("recovered");
+                    int str_death = response.getInt("deaths");
+                    int str_n_death = response.getInt("todayDeaths");
+                    int str_n_total = response.getInt("todayCases");
+                    int str_n_recover = response.getInt("todayRecovered");
+                    ValueAnimator animator = new ValueAnimator();
+                    animator.setObjectValues(pre_total, str_total);
+                    animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            t_case.setText(String.valueOf(animation.getAnimatedValue()));
+                        }
+                    });
+                    animator.setDuration(5000);
+                    animator.start();
+                    ValueAnimator animator1 = new ValueAnimator();
+                    animator1.setObjectValues(pre_active, str_active);
+                    animator1.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            t_active.setText(String.valueOf(animation.getAnimatedValue()));
+                        }
+                    });
+                    animator1.setDuration(5000);
+                    animator1.start();
+                    ValueAnimator animator2 = new ValueAnimator();
+                    animator2.setObjectValues(pre_recover, str_recover);
+                    animator2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            t_recov.setText(String.valueOf(animation.getAnimatedValue()));
+                        }
+                    });
+                    animator2.setDuration(5000);
+                    animator2.start();
+                    ValueAnimator animator3 = new ValueAnimator();
+                    animator3.setObjectValues(pre_death, str_death);
+                    animator3.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            t_death.setText(String.valueOf(animation.getAnimatedValue()));
+                        }
+                    });
+                    animator3.setDuration(5000);
+                    animator3.start();
+                    ValueAnimator animator4 = new ValueAnimator();
+                    animator4.setObjectValues(pre_n_total, str_n_total);
+                    animator4.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            n_case.setText("[+"+String.valueOf(animation.getAnimatedValue())+"]");
+                        }
+                    });
+                    animator4.setDuration(5000);
+                    animator4.start();
+                    ValueAnimator animator5 = new ValueAnimator();
+                    animator5.setObjectValues(pre_n_recover, str_n_recover);
+                    animator5.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            n_recover.setText("[+"+String.valueOf(animation.getAnimatedValue())+"]");
+                        }
+                    });
+                    animator5.setDuration(5000);
+                    animator5.start();
+                    ValueAnimator animator6 = new ValueAnimator();
+                    animator6.setObjectValues(pre_n_death, str_n_death);
+                    animator6.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            n_death.setText("[+"+String.valueOf(animation.getAnimatedValue())+"]");
+                        }
+                    });
+                    animator6.setDuration(5000);
+                    animator6.start();
+                    SharedPreferences sh = getActivity().getSharedPreferences("world_data_set", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor myEdit = sh.edit();
+                    myEdit.putInt("pre_total",str_total);
+                    myEdit.putInt("pre_active",str_active);
+                    myEdit.putInt("pre_recover",str_recover);
+                    myEdit.putInt("pre_death",str_death);
+                    myEdit.putInt("pre_n_total",str_n_total);
+                    myEdit.putInt("pre_n_recov",str_n_recover);
+                    myEdit.putInt("pre_n_death",str_n_death);
+                    myEdit.commit();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

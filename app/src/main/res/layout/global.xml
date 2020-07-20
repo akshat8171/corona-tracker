@@ -30,7 +30,7 @@
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="28dp"
                 android:text="Confirmed"
-                android:textColor="@color/Grapefruit"
+                android:textColor="@color/Love_Red"
                 android:textSize="22dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="9dp"
-                android:textColor="@color/Grapefruit"
+                android:textColor="@color/Love_Red"
                 android:textSize="28dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/textView2"
@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:textColor="@color/Grapefruit"
+                android:textColor="@color/Love_Red"
                 android:textSize="15dp"
                 app:layout_constraintEnd_toEndOf="@+id/t_case"
                 app:layout_constraintStart_toStartOf="@+id/t_case"
@@ -151,6 +151,7 @@
                 android:textColor="@color/Gray_Goose"
                 android:textSize="22dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.725"
                 app:layout_constraintStart_toStartOf="@+id/t_active"
                 app:layout_constraintTop_toTopOf="@+id/textView3" />
 
@@ -168,6 +169,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:textSize="13dp"
+            android:imeOptions="actionDone"
             android:drawableEnd="@drawable/search_icon"
             android:hint="State Name"
             android:textAlignment="center"
