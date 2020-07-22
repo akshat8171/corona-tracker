@@ -91,7 +91,8 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_creator:
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
-                        alertDialogBuilder.setMessage("Name:").setCancelable(true);
+                        alertDialogBuilder.setTitle("About Creator");
+                        alertDialogBuilder.setMessage("Email: akshatkingggg@gmail.com \n\n This app is brought to you with purpose to let you know about the cases of corona in INDIA and preventive measure you can take").setCancelable(true);
                         AlertDialog alertDialog = alertDialogBuilder.create();
                         alertDialog.show();
                         break;
@@ -99,10 +100,10 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_rate_us:
                         try{
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="+ "com.android.chrome")));
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="+ getPackageName())));
                         }
                         catch (ActivityNotFoundException e){
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id="+"com.android.chrome")));
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id="+getPackageName())));
                         }
                         break;
                 }
